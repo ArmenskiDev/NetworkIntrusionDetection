@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Dataset files
+data/raw/*
+data/processed/*
+*.csv
+*.zip
+*.pcap
+*.parquet
+
+# Keep README files inside ignored data folders
+!data/raw/README.md
+!data/processed/README.md
+
+# Models
+models/*
+*.pkl
+*.joblib
+*.h5
+*.pt
+*.pth
+*.onnx
+
+# Keep models README
+!models/README.md
+
+# Reports / temporary files
+*.log
+.DS_Store
+Thumbs.db
