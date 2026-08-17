@@ -1,42 +1,83 @@
 # Network Intrusion Detection
 
-This is a machine learning project that uses network-flow data to identify malicious traffic. I used the CIC-IDS2017 dataset and compared three binary classifiers:
+This project uses the CIC-IDS2017 dataset to classify network traffic as either benign or malicious. I trained and compared three machine learning models:
 
 - Logistic regression
 - Random forest
 - XGBoost
 
-The full analysis is in `notebooks/intrusion_detection_model.ipynb`.
+The data cleaning, training, graphs, and results are all in `notebooks/intrusion_detection_model.ipynb`.
 
-## Dataset
+## Requirements
 
-The dataset is not included in the repository because the CSV files are large. Download the MachineLearningCSV version of [CIC-IDS2017](https://www.unb.ca/cic/datasets/ids-2017.html) and place the eight CSV files in `data/raw/`.
+You will need:
 
-The notebook combines the files, removes invalid and duplicate rows, and changes the original labels into two classes:
+- Python 3.10 or newer
+- JupyterLab
+- The CIC-IDS2017 CSV files
+- Around 16 GB of RAM is recommended because the full dataset has about 2.8 million rows
 
-- `0`: benign traffic
-- `1`: malicious traffic
+The Python packages used in the notebook are:
 
-## Running the notebook
+- joblib
+- matplotlib
+- numpy
+- pandas
+- scikit-learn
+- seaborn
+- xgboost
 
-Create a virtual environment and install the packages:
+They are also listed in `requirements.txt`.
+
+## Dataset setup
+
+The dataset is too large to include in this repository. Download the MachineLearningCSV version from the [CIC-IDS2017 website](https://www.unb.ca/cic/datasets/ids-2017.html).
+
+Extract the download and place all eight CSV files in:
+
+```text
+data/raw/
+```
+
+## Installation
+
+Open PowerShell in the project folder and create a virtual environment:
 
 ```powershell
 python -m venv .venv
 .venv\Scripts\Activate.ps1
-pip install -r requirements.txt
 ```
 
-Then open Jupyter and run the notebook from top to bottom:
+Install the required packages:
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+## Running the project
+
+Start JupyterLab from the main project folder:
 
 ```powershell
 jupyter lab
 ```
 
-Training all three models takes a while because the combined dataset has about 2.8 million rows.
+Open `notebooks/intrusion_detection_model.ipynb` and run the cells from top to bottom.
+
+Training may take a while because all eight CSV files are combined and three models are trained.
 
 ## Results
 
-On the saved 20% test split, XGBoost gave the best malicious-class F1 score (99.73%). Random forest was close behind, while logistic regression had more false positives. These results are for the CIC-IDS2017 lab dataset and may not carry over to live network traffic.
+XGBoost had the best result on the test data, with 99.91% accuracy and a 99.73% F1 score for malicious traffic. Random forest was very close, while logistic regression produced more false alarms.
 
-The notebook saves the selected model to `models/intrusion_detector.joblib`. Generated model files are ignored by Git.
+These results came from a controlled dataset with a random train and test split, so performance on live network traffic may be different.
+
+## Saved model
+
+The notebook saves the best model here:
+
+```text
+models/intrusion_detector.joblib
+```
+
+The saved file also contains the scaler and feature names needed to use the model again.
